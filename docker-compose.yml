@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+  bootstrap:
+    image: mysql:latest
+    environment:
+      - MYSQL_ENABLED=true
+      - MYSQL_VERSION=8
+      - MYSQL_DATABASE=test
+      - MYSQL_USER=test
+      - MYSQL_PASSWORD=test
+      - REDIS_ENABLED=true
+      - MYSQL_ROOT_PASSWORD=test
+    networks:
+      - shared
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+networks:
+  shared_services:
+    external:
+      name: shared
