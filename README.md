@@ -1,12 +1,17 @@
 ## Для установки:
 
 - Клонировать репозиторий
-- Выполнить команды: 0. yarn 0. yarn build 0. docker-compose up
-- Выполнить запуск приложения 0. yarn start:dev
+- Выполнить команды:
+  1. yarn
+  2. yarn build
+  3. docker-compose up
+- Выполнить запуск приложения:
 
-  ### Приложение запустится на localhost:4000
+1. yarn start:dev
 
-  - Swagger:
-    http://localhost:4000/api/#/
+### Приложение запустится на localhost:4000
 
-    ![Preview](preview.png)
+- Swagger:
+  http://localhost:4000/api/#/
+
+  ![Preview](preview.png)
