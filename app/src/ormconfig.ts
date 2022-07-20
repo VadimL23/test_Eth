@@ -5,6 +5,8 @@ import { SnakeNamingStrategy } from 'typeorm-snake-naming-strategy';
 dotenv.config();
 dotenv.config({ path: '.env' });
 
+(() => console.log('adas'))();
+
 export default {
   type: 'mysql',
   host: process.env.TEST_MYSQL_HOST,

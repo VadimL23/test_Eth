@@ -1,8 +1,28 @@
 version: '3.7'
 
 services:
+
+  main:
+    container_name: main
+    build: 
+      context: .
+    env_file:
+      - app/.env
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - 5000:5000
+      - 9229:9229
+    command: npm run start:dev
+    depends_on:
+      - bootstrap
+
   bootstrap:
     image: mysql:latest
+    container_name: mysql8
+    env_file:
+      - app/.env
     environment:
       - MYSQL_ENABLED=true
       - MYSQL_VERSION=8
@@ -11,12 +31,6 @@ services:
       - MYSQL_PASSWORD=test
       - REDIS_ENABLED=true
       - MYSQL_ROOT_PASSWORD=test
-    networks:
-      - shared
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-
-networks:
-  shared_services:
-    external:
-      name: shared
+    restart: always

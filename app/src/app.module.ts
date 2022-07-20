@@ -6,9 +6,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuration from './config/configuration';
 import { Web3Service } from './services/web3.service';
 import { ContractService } from './services/contract.service';
-// import { TypeOrmModule } from '@nestjs/typeorm';
-// import { ContractEntity } from './entities/contract.entity';
-// import { OrderEntity } from './entities/order.entity';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ContractEntity } from './entities/contract.entity';
+import { OrderEntity } from './entities/order.entity';
 
 @Module({
   imports: [
@@ -16,15 +16,13 @@ import { ContractService } from './services/contract.service';
       load: [configuration],
       isGlobal: true,
     }),
-    // TypeOrmModule.forFeature([ContractEntity, OrderEntity]),
-    // TypeOrmModule.forRootAsync({
-    //   imports: [ConfigModule],
-    //   inject: [ConfigService],
-    //   useFactory: (configService: ConfigService) => {
-    //     configService.get('database');
-    //     console.log(configuration());
-    //   },
-    // }),
+    TypeOrmModule.forFeature([ContractEntity, OrderEntity]),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) =>
+        configService.get('database'),
+    }),
   ],
   controllers: [AppController, ContractController, WalletController],
   providers: [Web3Service, ContractService],

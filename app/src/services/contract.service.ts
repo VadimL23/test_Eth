@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { Web3Service } from './web3.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Connection, Repository } from 'typeorm';
-import { ContractEntity } from 'src/entities/contract.entity';
+import { ContractEntity } from '../entities/contract.entity';
 
 @Injectable()
 export class ContractService {
@@ -13,8 +13,8 @@ export class ContractService {
   private address = this.configService.get('web3')['contractAddress'];
   private abi: any;
   constructor(
-    // @InjectRepository(ContractEntity)
-    // private readonly contractRepository: Repository<ContractEntity>,
+    @InjectRepository(ContractEntity)
+    private readonly contractRepository: Repository<ContractEntity>,
     private configService: ConfigService,
     private readonly web3: Web3Service, //  private connection: Connection,
   ) {
@@ -64,5 +64,17 @@ export class ContractService {
     const result = await this.contract.methods.getUserOrderIds(from, length);
     console.log(result);
     return result;
+  }
+
+  findAll(): Promise<ContractEntity[]> {
+    return this.contractRepository.find();
+  }
+
+  findOne(id: string): Promise<ContractEntity> {
+    return this.contractRepository.findOne(id);
+  }
+
+  async remove(id: string): Promise<void> {
+    await this.contractRepository.delete(id);
   }
 }
